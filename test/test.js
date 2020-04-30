@@ -255,11 +255,8 @@ describe("FdSlicer", function() {
       if (err) return done(err);
       var slicer = fdSlicer.createFromFd(fd, {autoClose: true});
       var rs = slicer.createReadStream();
-      rs.on('error', function(err) {
-        assert.strictEqual(err.message, "stream destroyed");
-        slicer.on('close', done);
-      });
       rs.destroy();
+      slicer.on('close', done);
     });
   });
 
